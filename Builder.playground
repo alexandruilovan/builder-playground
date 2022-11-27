@@ -1,0 +1,63 @@
+import UIKit
+
+protocol Builder {
+    func addFirstIngredient()
+    func addSecondIngredient()
+    func addTopping()
+}
+
+class SandwichBuilder: Builder {
+    
+    private var sandwich = Sandwich()
+    
+    func addFirstIngredient() {
+        sandwich.add(ingredient: "Meat")
+    }
+    
+    func addSecondIngredient() {
+        sandwich.add(ingredient: "Cheese")
+    }
+    
+    func addTopping() {
+        sandwich.add(ingredient: "Garlic Sauce")
+    }
+    
+    func reset() {
+        sandwich = Sandwich()
+    }
+    
+    func fetchSandwich() -> Sandwich {
+        let result = self.sandwich
+        reset()
+        return result
+    }
+}
+
+
+class Sandwich {
+    private var ingredients = [String]()
+    
+    func add(ingredient: String) {
+        self.ingredients.append(ingredient)
+    }
+    
+    func listIngredients() -> String {
+        return "The Sandwich is made of: " + ingredients.joined(separator: ", ")
+    }
+}
+
+class SandwichApp {
+    
+    private var sandwichBuilder = SandwichBuilder()
+    
+    func createSandwich() -> Sandwich {
+        sandwichBuilder.addFirstIngredient()
+        sandwichBuilder.addSecondIngredient()
+        sandwichBuilder.addTopping()
+        
+       return sandwichBuilder.fetchSandwich()
+    }
+}
+
+let sandwichApp = SandwichApp()
+sandwichApp.createSandwich().listIngredients()
